@@ -7,8 +7,8 @@ If using 'file_dir_params.R' to specify file paths for collaboration or using ac
     ## start code
     winos <- ifelse(grepl("windows", Sys.info()['sysname'], ignore.case=T), 1, 0)
     # specify absolute file path to file_dir_params.R
-    if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")
-    if(winos==0) source(""~/mypath/myproject/Chapter 1/functions/file_dir_params.R")
+    if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")      #Change to your path
+    if(winos==0) source("~/mypath/myproject/Chapter 1/functions/file_dir_params.R")       #Change to your path
     rm(winos)
     ## end code
    
