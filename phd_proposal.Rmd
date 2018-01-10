@@ -1,0 +1,89 @@
+---
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+fontsize: 11pt
+header-includes:
+- \usepackage{placeins}
+- \usepackage{fancyhdr}
+- \usepackage{pdflscape}
+- \usepackage{gensymb}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+bibliography: [../Chapter 1/ch1_references.bib,ch2.bib,ch3.bib] #C:/Users/Julie/Box Sync/R/Chapter 1/ch1_references.bib
+csl: the-auk.csl #C:/Users/Julie/Box Sync/R/Chapter 1/the-auk.csl
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+ options(scipen=1, digits=2)
+```
+
+\pagenumbering{gobble}
+
+```{r child = 'titlepage.Rmd'}
+```
+
+\newpage
+\pagestyle{fancy}
+
+\fancyhead[LE,RO]{}
+\fancyhead[LO,RE]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pagenumbering{roman}
+
+\fancyhead[CO,CE]{Table of Contents}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+
+
+```{r child = 'abstract.Rmd',eval=FALSE}
+#move the contents outside the chunk when ready to include
+\newpage
+\fancyhead[CO,CE]{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
+```
+
+\newpage
+\pagenumbering{arabic}
+\fancyhead[CO,CE]{Chapter 1}
+
+```{r child = '../Chapter 1/chapter1.Rmd'}
+```
+
+\FloatBarrier
+\newpage
+\fancyhead[CO,CE]{Chapter 2}
+
+```{r child = 'chapter2.Rmd'}
+```
+
+
+\FloatBarrier
+\newpage
+\fancyhead[CO,CE]{Chapter 3}
+
+```{r child = 'chapter3.md'}
+```
+
+\FloatBarrier
+\newpage
+\fancyhead[CO,CE]{Literature Cited}
+\section*{Literature Cited}
+
+```{r child = 'lit_cited.R'}
+#<div id="refs"></div>
+```
+
+
+\FloatBarrier
+\newpage
+\fancyhead[CO,CE]{Supplemental Information}
+
+```{r child = 'supplemental.Rmd'}
+```

@@ -1,0 +1,46 @@
+---
+output: pdf_document
+---
+
+\begin{centering}
+
+\vspace*{2 cm}
+
+\LARGE
+
+{\bf Linking weather and evolution to the movement ecology of birds}
+
+\vspace{1.5 cm}
+\normalsize
+By
+
+\vspace{1.5 cm}
+
+\Large
+Julie Mallon
+
+\vspace{3 cm}
+
+\normalsize
+A dissertation proposal for the degree of  
+
+\vspace{0.5 cm}
+Doctor of Philosophy in Biological Sciences
+
+\vspace{0.5 cm}
+University of Maryland, College Park
+
+\vspace{0.5 cm}
+October 10, 2017
+
+\end{centering}
+
+\vspace{3 cm}
+
+\normalsize
+Committee members:  
+Dr. Bill Fagan, Committee Chair  
+Dr. Derek Paley, Dean’s Rep  
+Dr. Jerry Wilkinson   
+Dr. Helen Bailey  
+Dr. Keith Bildstein  
