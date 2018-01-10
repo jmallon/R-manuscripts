@@ -1,0 +1,595 @@
+---
+title: "Chapter 1: Do turkey vultures use stopovers to avoid unfavorable weather?"
+#author: "Julie Mallon"
+#date: "August 7-27, 2017"
+output: pdf_document
+#fontsize: 11pt
+bibliography: ../Chapter 1/ch1_references.bib #C:/Users/Julie/Box Sync/R/Chapter 1/ch1_references.bib
+csl: the-auk.csl #C:/Users/Julie/Box Sync/R/Chapter 1/the-auk.csl
+header-includes:
+- \usepackage{pdflscape}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+rm(list=ls())
+
+## Load host-dependent directory environment
+winos <- ifelse(grepl("windows", Sys.info()['sysname'], ignore.case=T), 1, 0)
+if(winos==1) source("C:/Users/Julie/Box Sync/R/Chapter 1/Scripts/Functions/file_dir_params.R")
+if(winos==0) source("~/Box Sync/R/Chapter 1/Scripts/Functions/file_dir_params.R")
+#rm(winos)
+```
+
+```{r source data and analyses, include=FALSE}
+library(here)
+source(here('Scripts/weather vs feeding.R'))
+source(here('Scripts/risk aversion.R'))
+source(here('Scripts/start_end_stopovers.R'))
+source(here('Scripts/acopian telem map.R'))
+
+
+pacman::p_load(knitr, captioner, bundesligR, stringr)
+library(broman)
+library(bibtex)
+#write.bib(c('bibtex','lme4','adehabitatLT','ResourceSelection','marcher'), file = "references.bib", append = TRUE, verbose = TRUE)
+#bib<-read.bib('references.bib')
+#bib$key
+```
+
+```{r numbering tables,include=FALSE}
+#tables
+table_nums <- captioner::captioner(prefix = "Table")
+
+tab.1_cap <- table_nums(name = "tab_1", 
+                        caption = "Weather variables used in mixed model analyses")
+tab.2_cap <- table_nums(name = "tab_2", 
+                        caption = "Stopover categories and definitions")
+tab.3_cap <- table_nums(name = "tab_3", 
+                        caption = "Model prediction of support for the weather-avoidance or null hypothesis for each stopover category.") 
+tab.4_cap <- table_nums(name = "tab_4", 
+                        caption = "Generalized linear mixed models of best fit for descriminanting between weather during stopover and migration.")  
+tab.5_cap <- table_nums(name = "tab_5", 
+                        caption = "Loadings for multivariate weather axis from LDA") 
+tab.6_cap <- table_nums(name = "tab_6", 
+                        caption = "Genearlized linear mixed models of best fit for changes in weather variables 6 hours before the start and ends of stopovers") 
+
+  #inline example  text `r t.ref("tab_1")` more text
+
+
+t.ref <- function(x) {
+  stringr::str_extract(table_nums(x), "[^:]*")
+}
+```
+
+```{r numbering figures,include=FALSE}
+#figures
+fig_nums <- captioner::captioner(prefix = "Figure")
+
+fig.1_cap <- fig_nums(name = "fig_1", 
+                        caption = "Map of migration routes for 3 turkey vulture populations")
+fig.2_cap <- fig_nums(name = "fig_2", 
+                        caption = "Relationship of speed with stopover rate")
+fig.3_cap <- fig_nums(name = "fig_3", 
+                        caption = "Risk tolerance of races along a multivariate weather axis. Weather variables are plotted beneath the axis to indicate how an increase effects the probability of stopover use. Increases in downward longwave radiation, total atmospheric water, and precipitation are associated with a greater probability of using a stopover. In contrast, an increase in downward shortwave radation, orographic and thermal uplifts, temperature, and tailwinds are all associated with a greater probability of migrating.")
+fig.4_cap <- fig_nums(name = "fig_4", 
+                        caption = "Risk tolerance at species and race level by season")
+fig.5_cap <- fig_nums(name = "fig_5", 
+                        caption = "Risk tolerance at species and race level by position along route")
+#fig.5_cap <- fig_nums(name = "fig_5", 
+                       # caption = "Risk tolerance at species and race level by years of experience since first tagged. Only the first 3 years are used due to uneven lengths of sampling across individuals and races")
+
+fig.6_cap <- fig_nums(name = "fig_6", 
+                        caption = "Changes in weather 6 hours before and after the start of stopovers. Red line indicates the first hour of a stopover")
+fig.7_cap <- fig_nums(name = "fig_7", 
+                        caption = "Changes in weather 6 hours before and after the end of stopovers. Red line indicates the last hour of a stopover")
+fig.8_cap <- fig_nums(name = "fig_8", 
+                        caption = "Difference in weather at the start and end of stopovers. Red line indicates the first and last hour of a stopover")
+  #inline example  text `r f.ref("fig_1")` more text
+f.ref <- function(x) {
+  stringr::str_extract(fig_nums(x), "[^:]*")
+}
+
+```
+#Do turkey vultures use stopovers to avoid unfavorable weather?
+
+##Abstract
+Turkey vultures are obligate soaring migrants and should, therefore, be sensitive to changing environmental conditions that affect flight performance. Here, I test whether the primary function of stopover use by turkey vultures is to avoid poor weather conditions. I found that `r percent(1- as.numeric(k3[which(k3$stop.cat2=="large tortuous"),2]/k4$n.migs))` of stopovers were likely used in response to weather. I also found that this behavioral response was rapid, often within 1-2 hours of a change in weather conditions. I tested if the use of stopovers was stereotypical and found variable responses across race, route position, and season. This suggests stopover use varies with perceived risk or may be a plastic behavior, which changes with some internal state such as fat stores or based on past experience. 
+
+
+##Introduction
+
+Soaring birds use environmental updrafts to subsidize flight. Terrestrial birds can soar using orographic, thermal, or turbulent uplift, which all form under different environmental conditions. Some soaring birds use contorted soaring on turbulence formed by winds deflected over forest edges [@Mallonetal2016]; however, this is unlikely to be an important updraft for migrants as it is not continuous and its limited altitude does not aid in cross-country soaring. More important for migrants, orographic uplift is generated by winds deflected over topographic relief [@pennycuick1975mechanics; @pennycuick1984flight; @kerlinger1989flight]. Orographic uplift is spatially restricted in comparison to thermal uplift, which is widely distributed [@pennycuick1975mechanics] and allows for cross-country soaring. Thermals, vortices of ascending hot air surrounded by descending cooler air [@pennycuick1975mechanics; @oke1987boundary; @kerlinger1989flight], are generated by differential heating of the earth’s surface. Thermals are an uncertain resource that only form under appropriate weather conditions [@kerlinger1989flight]. Strength and size of thermals are driven in large part by albedo (radiation absorbance), reflectance, vegetation, and topography. 
+
+
+Because these updrafts are formed by under certain environmental conditions, soaring birds should be sensitive to changes in weather while they are migrating. Poor weather conditions affects soaring birds by slowing or preventing the development of updrafts, thereby grounding soaring birds. Counts of migrants at hawk watch sites indicate that most migrants stop during cold fronts and peak numbers of migrants that soar or flap are observed immediately following a passing cold front [@allen1996within]. 
+
+
+However, one migrant raptor species, the Northern Harrier (*Circus cyaneus*), is often observed migrating during rain and passing cold fronts [@allen1996within; @macwhirter1996northern]. The migrations of Northern Harriers are not restricted to the availability of updrafts because, in addition to soaring, Northern Harriers also migrate by flapping. Although flying during rain or snow can cause mortality [@richardson1978timing], flapping migrants may be less deterred than soaring migrants by inclement weather because flying does not pose any extra energetic cost, but stopping migration would pose both a time and energetic cost. 
+
+
+The purpose of this study was to determine if turkey vultures (*Cathartes aura*) primarily use stopovers in response to weather instead of some other behavior (e.g. feeding, resting). To test this ‘weather avoidance’ hypothesis, I quantified the number of stopovers that met the following assumptions: 1) movement was infrequent and 2) weather conditions were not good for soaring. Support for the null hypothesis would be shown if 1) movements were frequent and 2) weather conditions during the stopover were good for soaring. Because migratory drive is considered to be a largely plastic behavior [@olsson2006environmentally; @ogonowski2009migratory ], I tested if stopover behavior was also a plastic response. I analyzed how vulture tolerance for poor weather changed among races, with position along their migratory route, and between seasons. Finally, to determine which variables vultures are responding to and if there was a time lag in the response of vultures to weather, I analyzed how weather variables changed in the hours before and after the start and ends of stopovers. 
+
+
+
+
+## Methods
+
+### Turkey vulture data
+I used satellite tracking data from four migratory populations which represent three of the seven races of turkey vulture (*C. aura aura*, *C. aura meridionalis*, and *C. aura ruficollis*; hereafter ‘aura’, ‘meridionalis’, and ‘ruficollis’). These populations range across most of the species’ distribution – from Canada to Southern South America (`r f.ref("fig_1")`). Tracking data were provided by Hawk Mountain Sanctuary (Kempton, Pennsylvania, USA) and accessed via MoveBank [@Dodgeetal2013]. I used telemetry data collected from `r min(lubridate::year(stops_full_weather2$local.time))` - `r max(lubridate::year(stops_full_weather2$local.time))`. I used only migrations with regularly collected data (i.e. mean data interval <3 hours). (*C. aura septentrionalis* data available had insufficient number of vultures useable for this study)
+
+
+### Weather and Landscape predictors
+I accessed weather data using Movebank Env-data annotation [@Dodgeetal2013]. Several weather variables were selected (`r t.ref("tab_1")`), which were considered important to the use of thermal updrafts or of orographic updrafts by Golden Eagles [@duerr2015flight]. 
+
+
+### Annotating Migrations and Stopovers
+I annotated migrations from continuous tracks manually using first passage time (FPT) [R package adehabitatLT; @adehabitatLT]. For the purposes of annotating migration and stopovers, I interpolated each migration track to get hourly fixes. To find potential stopovers using FPT, I used FPT with the radius that minimized log-variance (between 2500 and 6000 m). To find the start and end times of each stopover, I used a threshold relative to the structure of the data to reduce under-selection of stopovers from tracks with highly variable FPTs and over-selection of stopovers from tracks with low variance of FPTs. The threshold was the FPT of the 0.55 quantile (for high variance data) or 0.75 quantile (for low variance data). Stopovers selected by FPT were rejected if <25% of the data was during typical flight hours or if the duration was <3 hours. To find non-stationary stopovers that were missed with this approach, I considered groups of >30 points within a 15km buffer to be a ‘stopover’. To increase precision of the start and end of stopovers selected, I removed locations at the start or end of the stopover that had speeds >95% of the speeds of all points in the stopover. Stopovers were then visually inspected using R package 'marcher' [@marcher].  
+
+
+### Categorizing stopovers  
+Because a single stopover event could support both hypotheses at different time points during the stopover (e.g. a period of frequent movements followed by a sedentary period), I considered any stopovers that had at least partial support for the null hypothesis as a 'non-weather stopover'. For quantification purposes, stopovers must fully support the weather avoidance hypothesis. To determine if a stopover supported the weather-avoidance hypothesis, I first categorized stopovers by movement patterns. Then, I evaluated the weather associated with each weather type using a binomial GLMM. The stopover category most associated with poor weather was used to define 'bad soaring' weather and the stopover category with the best weather was used to define 'good soaring' weather. I used these two categories to predict group membership for the other 4 categories. This allowed me to estimate how many stopovers were likely due to weather-avoidance and how many stopovers were likely in response to other internal or external drivers. 
+
+Stopovers were categorized into 6 types (`r t.ref("tab_2")`), based on visual inspection. To determine which hypothesis each movement type supported, I used a binomial GLMM comparing each stopover category to random weather during migratory movements. Only categories of stopovers that supported the weather-avoidance hypothesis were used for further analysis.
+
+
+### Analyses
+All analyses were done using `r substr(R.version$version.string,1,15)` [@R]). Models are presented using R package 'stargazer' [@stargazer]. Models were fit with lme4 package [@lme4] and models were selected based on AIC values [@anderson2007model]. Because many weather predictors covary, the least predictive covariate was removed when covariance of two predictors was >0.7. I used migration 'ID' as the random variable. 
+
+Because weather and landscape variables vary greatly for the three races, which migrate in different climatic and geographical regions, I created a multivariate environmental axis using discriminant function analysis for ‘stopover’ and ‘non-stopover’ (i.e. active migration) data. I created an axis using raw environmental data, keeping only variables that had coefficients with an absolute value >0.02. 
+
+To determine if vultures vary their risk tolerance by race, season, or position along their migration route, I used logistic regression to predict the probability of using a stopover for values along the multivariate axis. I also assessed all possible interactions of these three terms, except season and portion of migration track. High risk tolerance indicates a lower probability of stopping over under identical environmental conditions. Likewise, a low risk tolerance indicates a greater probability of stopping under identical environmental conditions. To evaluate the effect of postion along a migration route, I categorized 'position' for each migration route as 'winter' (25% of route nearest winter grounds), 'middle' (middle 50% of route), and 'summer' (25% of route nearest summer grounds).
+
+
+### Use of stopovers as a behavioral response to change in weather
+To determine if birds respond directly to changes in weather, I evaluated if the start and end of stopovers were associated with peak changes in weather variables. I used a glm to identify if the timing of stopovers were in response to changes in weather immediately before or after the start or end of each stopover ($\frac{+}{-}$ 6 hours). 
+I found the mean change at the species level in each weather variable for each hour before and after the start and end of each stopover. I then identified the minima and maxima relative to the time difference from the start or end of the stopover.  
+
+
+
+##Results and Discussion
+
+### Description of stopovers  
+Using `r k4$n.bird` birds, I identified `r k4$n.migs` migrations with a total of `r k1` unique stopovers (`r t.ref("tab_2")`). Of these, `r k3[which(k3$stop.cat2=="sedentary"),2]` are sedentary (i.e. area of all points < `r nn` $km^2$), `r k3[which(k3$stop.cat2=="overnight"),2]` are 'overnight' (i.e. area > `r nn` $km^2$ and during right before or right after typical roosting hours), `r k3[which(k3$stop.cat2=="linear1"),2]` are 'single linear' (i.e. two clusters of points with one transition between), `r k3[which(k3$stop.cat2=="linear2"),2]` are 'multiple linear' (i.e. three or more clusters with one transition between),  `r k3[which(k3$stop.cat2=="small tortuous"),2]` are small, tortuous (i.e. repeated movements between two or more locations and area <`r tort.lim` $km^2$) and `r k3[which(k3$stop.cat2=="large tortuous"),2]` are large, tortuous (i.e. repeated movements between two or more locations and have an area > `r tort.lim` $km^2$) (`r t.ref("tab_3")`).
+
+Based on binomial GLMMs comparing weather conditions during migration and during each stopover catgory `r t.ref("tab_4")`, 'sedentary' stopovers had the most support for the weather hypothesis, and 'large tortuous' stopovers had the most support for the null hypothesis. These catgories were used as training data to predict stopover membership of the other three categories. Model accuracy of the training data was `r  percent(round(sum( table(train.results$fit01,train.results$stop.cat)[c(1,4)])/ nrow(train.results),3))`. All of the other stopover categories were more similar to sedentary stopovers than to large tortuous stopovers, suggesting other stopover categories are dominated by a response to weather (`r percent(round(min(r1[2,]/r2),3))` - `r percent(round(max(r1[2,]/r2),3))`). 
+
+Therefore, large tortuous stopovers (n=`r k3[which(k3$stop.cat2=="large tortuous"),2]`) were considered to support the null hypothesis, and the other four categories (n=`r sum(k3[which(k3$stop.cat2!="large tortuous"),2])`) supported the weather avoidance hypothesis. For the remainder of the analysis, only weather-avoidance stopovers were used.
+
+The difference in stopover behavior among the races can largely be attributed to daily migration speed ($R^2$ = `r myround(1 - summary(speed.binom)$deviance/summary(speed.binom)$null.deviance,2)`; `r f.ref("fig_2")`). Generally, birds that migrate more slowly stopover more ($\beta$= `r myround(speed.coef[1],2)`, $\sigma$=`r myround(speed.coef[2],2)`, p=`r myround(speed.coef[4],2)`). For each race, birds that migrated the slowest stopped over the most. Rates of stopover use were not predicted by population, migration distance, or migration duration. 
+
+
+### Risk tolerance  
+
+The variable loadings for the multivariate axis used to test migratory risk tolerance is shown in `r t.ref("tab_5")`. Values below 0 are associated with conditions suitable for migration and values above 0 are conditions that are associated with stopovers.
+
+Among the three races, aura was the least risk tolerant at high values along the axis, and ruficollis was the most risk tolerant (`r f.ref("fig_3")`). There was no difference at the species level for season (`r f.ref("fig_4")`). Aura and ruficollis were less risk tolerant during the fall migration than the spring migration. Meridionalis, in contrast, was less risk tolerant during the spring migration than the fall migration.
+
+Along the migration route, turkey vultures were the least risk tolerant in the middle (50%) of their migration (`r f.ref("fig_5")`). This pattern was the same for meridionalis and aura. Ruficollis was the most risk tolerant near their winter grounds and had no difference in tolerance between middle and near their summer grounds. 
+
+The interaction of season, position, and race revealed a few an interesting findings about where and how vultures use stopovers.
+Meridionalis does not vary risk tolerance strongly along its route, but it does reverse its risk tolerance between seasons - it is the most tolerant during the spring near its winter grounds but the least tolerant near its winter grounds during fall (Supplemental Figure 1). This indicates they are less likely to stopover at the beginning of their routes each season (winter grounds during spring and summer grounds during fall).
+
+No birds from the aura population stopped near the summer grounds during spring migration, and were much less likely to stop in the middle of their route during the spring than near their winter grounds (Supplemental Figure 2).
+
+Ruficollis rarely uses stopovers near its winter grounds (Supplemental Figure 3). During spring, stopovers that have been recorded are indeed in response to weather, as indicated by the peak in probability of using a stopover at the most positive values of the multivariate weather axis. In contrast, during the fall, stopvers used near winter grounds appear to not be in response to weather because they are more likely to stopover during conditions that are good for soaring than during conditions that are poor for soaring.
+
+
+
+###Start of stopovers
+Evaluating the patterns of hourly changes in weather at the beginning and ends of stopovers revealed some interesting trends at the species level (`r f.ref("fig_6")`). Several variables changed the most <2 hours from the start of a stopover: accumulated precipitation, total atmospheric water, and downward longwave thermal radiation all increased, while wind speed, tailwind, thermal uplift intensity, latent heat flux, and orographic uplift intensity all decreased. This pattern suggests vultures respond immediately to these variables when migrating when deciding to use a stopover. 
+
+Other variables had the greatest rates of change more than two hours before the start of a stopover: surface pressure, downward shortwave thermal radiation, and dew temperature. This suggests either a potential lagged response by vultures, or these variables are correlated with the other variables vultures respond to.
+
+It is possible that vultures also respond to how quickly a variable is changing. The start of stopovers occured at the peak rate of decline of temperature and boundary height; it is possible that vultures responded to the rapid change in these variables, or that these variables change more slowly than others so there is a lagged response. Alternatively, this pattern could be caused by a large proportion of stopovers beginning in the afternoon, when temperature and boundary height are already declining.
+
+Additionally, all of the landscape variables (i.e. high vegetation, NDVI, DEM, and surface roughness) had maximum rates of decline more than one hour before the start of stopovers, which may indicate that weather conditions are poorer for soaring in some areas where vultures are more likley to use stopovers. Another possibility is that vultures select these landscape characteristics for their stopover sites, and that stopover use is a lagged response by more than one hour. 
+
+###End of stopovers
+Like the beginning of stopovers, vultures likely respond to certain weather variables that indicate that weather is good for soaring (`r f.ref("fig_7")`). Variables that increased the most <2 hours from the end of a stopover: boundary height, latent heat flux, temperature, thermal uplift intensity, and wind speed. Variables that decreased the most <2 hours from the end of a stopover were accumulated precipitation, and downward longwave thermal radiation. No variables had a peak rate of increase more than two hours before the end of stopovers, but total atmospheric water had a maximum rate of decrease more than two hours before the end of stopovers.
+
+However, the changes in weather are more stereotypical at the start of stopovers than the end of stopovers, suggesting the response to weather is more important or immediate when starting a stopover than when ending a stopover. Changes in these variables, therefore, evoke an immediate response by vultures either at the start or end of stopovers, or both. 
+
+###Models 
+Assuming vultures are indeed choosing to stopover in response to weather that has already or is currently occuring, I analyzed which variables were the most predictive in the 6 hours before the start and before the end of a stopover, respectively.
+
+Model coefficients for the models of best fit for changes in weather before the start and before the end of stopovers are shown in `r t.ref("tab_6")`. There is very little overlap in the variables that explain the changes in weather leading up to the change in behavior by vultures (i.e. either stopping or resuming migration). Consistent with `r f.ref("fig_6")`, in the hours before the start of a stopover were declines in thermal uplift, tailwind and boundary height as well as increases in precipitation are consistent with a decrease in environmental updrafts. Likewise, in the hours before the end of a stopover, declines in total atmospheric water and precipitation, as well as increases in tempearture and wind speed suggest some response to weather conditions that are good for soaring. The other variables are less directly involved in the formation of updrafts. 
+
+<br><br>
+
+##Conclusion
+This study is the first to attempt to determine the function of stopover use by migrant turkey vultures. Based on movement patterns, I've concluded that most stopovers are used in response to weather, with only `r percent(as.numeric(k3[which(k3$stop.cat2=="large tortuous"),2]/k4$n.migs))` of stopovers are likely used for some other function, such as scavenging. Confirming that stopovers are more likely to be used in response to certain weather conditions, it appears that stopover behavior may be somewhat plastic; this is possibly due to changes in the internal state of individual birds during migration. Further investigation is required to fully understand how the energetic cost of migration is impacted by stopover used for weather avoidance and for refueling.
+
+##Tables
+`r tab.1_cap`
+
+|Weather variable   | Source |    Definintion|
+|------------------ | -------|    ----------------------------------|
+|Daily Total Precipitation   |  ECMWF   |  Total accumulated convective and stratiform precipitation.  |
+|Thermal          |  MoveBank  |  Velocity of thermal uplift (air that rises as it is heated by the sun near the earth's surface)   |
+|Tailwind         | ECMWF |  Tailwind magnitude calculated from ECMWF Wind U and V components, relative to bird heading  |
+|Total Atmospheric Water    |  ECMWF   | Total water in the entire atmospheric column (water vapor + cloud water + cloud ice)   |
+|Air Temperature |  ECMWF   | Air temperature 2 m above the ground   |
+|Orographic       | MoveBank  | The velocity of upward air movement caused when rising terrain forces air to higher elevations   |
+|Downward Longwave Thermal Radiation    | ECMWF |  Amount of downward thermal (longwave) radiation (heat emitted by the earth's surface and atmosphere) at the earth's surface  |
+|Downward Shortwave Thermal Radiation      |   ECMWF  |   Amount of downward incident solar (shortwave) radiation at the earth's surface  |
+
+
+
+`r tab.2_cap`
+
+|Category	      |		Definition|
+|----------      | ---------------------------------|
+|Sedentary	     | Area <`r nn` $km^2$ or <5 points |
+|Overnight       | At least three non-roost hours before or after typical roosting hours  |
+|Single Linear   | Two sedentary clusters, separated by a single movement phase  |
+|Multiple Linear | Multiple sedentary clusters, separted by at least two movement phases  |
+|Small Tortuous  | Tortuous movements in an area < `r tort.lim` $km^2$  |
+|Large Tortuous  | Tortuous movements in an area > `r tort.lim` $km^2$  |
+
+`r tab.3_cap`
+```{r,echo=FALSE}
+rownames(r1)<-c("migration","stopover")
+colnames(r1)<-c("Single Lienar", "Multiple Linear", "Overnight", "Small Tortuous")
+knitr::kable(t(r1) )#, format = "html", table.attr = "style='width:40%;'")
+```
+
+<br><br>
+
+\newpage
+\thispagestyle{plain}
+\blandscape
+`r tab.4_cap`
+```{r,results='asis',echo=FALSE}
+
+library(stargazer)
+  stargazer(m1,m2,m3,m4,m5,m6,single.row = TRUE, column.labels  =c("Sedentary", "Overnight","Single Linear", "Mulitple Linear", "Small Tortuous", "Large Tortuous"),header=FALSE,         
+            covariate.labels = c("Surface Roughness", "Total Atm. Water", "Thermal",
+                               "Tailwind", "Precipitation (m)", "Orographic", "Surface Pressure",
+                               "Downward Long. Rad.", "Temperature", "Downward Short. Rad.", 
+                               "Boundary Height", "Intercept"))
+
+```
+\elandscape
+\thispagestyle{fancy}
+
+`r tab.5_cap`
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+names(ax1.loadings)<-c("Precipitation (m)","Thermal","Tailwind", "Total Atmospheric Water", 
+                                "Temperature", "Orographic", "Downward Longwave",  "Downward Shortwave")
+ax1.loadings<-as.data.frame(ax1.loadings)
+colnames(ax1.loadings)<-"loadings"
+
+kable(ax1.loadings,digits=2)
+```
+
+<br><br>
+
+
+`r tab.6_cap`
+```{r,echo=FALSE,warning=FALSE,message=FALSE,eval=TRUE,results='asis'}
+library(stargazer)
+#stargazer(b1)
+#stargzer(b2)
+stargazer(b1,b2, type="latex",single.row = TRUE,dep.var.labels  =c("Hours before start of stopover", "Hours before end of stopover"),header=FALSE, 
+          covariate.labels = c("Thermal", "Tailwind", "Total Atmospheric Water", "Surface Pressure","Temperature",
+                               "Wind Speed", "Dew Temperature", "Percent High Vegetation",
+                               "Downward Longwave","Boundary Height","Sensible Heatflux",
+                               "Latent Heatflux", "Precipitation (m)",  "Intercept"))
+```
+<br><br>
+
+\newpage
+
+##Figures
+
+
+```{r,fig.height=6,fig.width=5,echo=FALSE}
+colrs <- c("aura"="white", "meridionalis"="black", "ruficollis"="red")
+
+ggplot() + 
+  geom_polygon(data = americas.df, aes(x = long, y = lat,group=group),fill="grey90") +
+  scale_y_continuous(breaks = (-6:6) * 10,
+                     labels = c("60ºS", "50ºS", "40ºS","30ºS", 
+                                "20ºS", "10ºS", "0ºN", "10ºN", 
+                                "20ºN","30ºN", "40ºN", "50ºN", "60ºN")) +
+  scale_x_continuous(breaks = (-12:-4) * 10,
+                     labels = c("120ºW","110ºW", "100ºW", "90ºW",
+                                "80ºW", "70ºW", "60ºW","50ºW", "40ºW"))+ 
+  labs(y="",x="")+
+  coord_map("azequalarea", orientation = c(0, -90, 0))+
+geom_point(data=stops_full_weather2, aes(x=location.long, y=location.lat,color=pop), alpha = .5,size=1.4,pch=16)+  
+  scale_fill_manual(values = colrs, name="Race")+
+  theme(panel.background = element_rect(fill = "white", colour = "grey"), 
+        panel.grid.major = element_line(colour = "grey90"),
+        panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(), 
+        axis.text.x = element_text (size = 10, vjust = 0), 
+        axis.text.y = element_text (size = 10, hjust = 1.3),
+        legend.position=c(.2, .3)) + coord_cartesian(xlim = longlimits, ylim = latlimits) 
+```
+
+`r fig.1_cap` 
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.height=4,fig.width=4.5}
+p.speed
+```
+
+`r fig.2_cap` 
+<br><br>
+\newpage
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+p.tol.race
+```
+`r fig.3_cap`
+
+<br><br>
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.height=6}
+par(mfrow = c(2, 2),     # 2x2 layout
+    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
+    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
+    xpd = NA)            # allow content to protrude into outer margin (and beyond)
+
+ld.glm <- glm(stopover ~ LD1*Season, data=global.df2, family=binomial)
+
+plot(XLD,
+  predict(ld.glm,newdata=data.frame(Season="Spring",LD1=XLD),type="response"),
+  type="o",pch=21,bg="white",ylab="Probability of Stopover",
+  xlab="",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels=TRUE)
+axis(side=1,labels = FALSE)
+text(-2.8, 0.95, "Species",cex=1.3)
+points(XLD,
+  predict(ld.glm,newdata=data.frame(Season="Fall",LD1=XLD),type="response"),
+  type="o",pch=21,bg="black")
+legend(y=0.9,x=-4,pch=21,col=c("black","black"),pt.bg=c("white","black"),
+  legend=c("Spring","Fall"))
+
+
+###Population and Season interaction
+ld.glm <- glm(stopover ~ LD1*pop*Season, data=global.df2, family=binomial)
+
+#aura
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",Season="Spring",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",
+      ylab="",xlab="",,ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=FALSE)
+axis(side=2,labels=FALSE)
+text(-3, 0.95, "Aura",cex=1.3)
+points(XLD,
+  predict(ld.glm,newdata=data.frame(pop="aura",Season="Fall",LD1=XLD),
+       type="response"),type="o",pch=21,bg="black")
+
+
+#ruficollis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",Season="Spring",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",ylab="Probability of Stopover",xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels = TRUE)
+axis(side=1,labels = TRUE)
+text(-2.7,0.95, "Ruficollis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",Season="Fall",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+
+
+#meridionalis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",Season="Spring",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",
+ylab="",xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=TRUE)
+axis(side=2,labels = FALSE)
+text(-2.2, 0.95, "Meridionalis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",Season="Fall",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+```
+`r fig.4_cap`
+<br><br>
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.height=6}
+par(mfrow = c(2, 2),     # 2x2 layout
+    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
+    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
+    xpd = NA)            # allow content to protrude into outer margin (and beyond)
+ld.glm <- glm(stopover ~ LD1*dist, data=global.df2, family=binomial)
+
+plot(XLD,
+  predict(ld.glm,newdata=data.frame(dist="summer",LD1=XLD),type="response"),
+  type="o",pch=21,bg="white",ylab="Probability of Stopover",
+  xlab="",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels=TRUE)
+axis(side=1,labels = FALSE)
+text(-2.8, 0.95, "Species",cex=1.3)
+points(XLD,
+  predict(ld.glm,newdata=data.frame(dist="middle",LD1=XLD),type="response"),
+  type="o",pch=21,bg="black")
+points(XLD,
+  predict(ld.glm,newdata=data.frame(dist="winter",LD1=XLD),type="response"),
+  type="o",pch=21,bg="red")
+legend(y=0.9,x=-4,pch=21,col=c("black","black","black"),pt.bg=c("white","black","red"),
+  legend=c("summer","middle","winter"))
+
+
+###Population and Distance interaction
+ld.glm <- glm(stopover ~ LD1*pop*dist, data=global.df2, family=binomial)
+
+#aura
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",dist="summer",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",ylab="",
+        xlab="",ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=FALSE)
+axis(side=2,labels=FALSE)
+text(-3, 0.95, "Aura",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",dist="middle",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",dist="winter",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+#ruficollis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="summer",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",
+        ylab="Probability of Stopover",xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels = TRUE)
+axis(side=1,labels = TRUE)
+text(-2.7,0.95, "Ruficollis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="middle",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="winter",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+
+#meridionalis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="summer",LD1=XLD),
+        type="response"),type="o",pch=21,bg="white",ylab="",
+        xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=TRUE)
+axis(side=2,labels = FALSE)
+text(-2.2, 0.95, "Meridionalis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="middle",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="winter",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+```
+`r fig.5_cap`
+<br><br>
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.height=6,eval=FALSE}
+par(mfrow = c(2, 2),     # 2x2 layout
+    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
+    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
+    xpd = NA)            # allow content to protrude into outer margin (and beyond)
+ld.glm <- glm(stopover ~ LD1*experience, data=global.df2, family=binomial)
+
+#species
+plot(XLD,
+predict(ld.glm,newdata=data.frame(LD1=XLD,experience="1"),
+        type="response"),type="o",pch=21,bg="white",
+ylab="Probability of Stopover",xlab="",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels=TRUE)
+axis(side=1,labels = FALSE)
+text(-2.8, 0.95, "Species",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(experience="2",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(experience="3",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red", 
+legend=c("year 1","year 2","year 3"))
+
+ld.glm <- glm(stopover ~ LD1*pop*experience, data=global.df2, family=binomial)
+
+#aura
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",LD1=XLD,experience="1"),
+        type="response"),type="o",pch=21,bg="white",
+ylab="",xlab="",ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=FALSE)
+axis(side=2,labels=FALSE)
+text(-3, 0.95, "Aura",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",experience="2",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="aura",experience="3",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+#ruficollis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",LD1=XLD,experience="1"),
+        type="response"),type="o",pch=21,bg="white",
+ylab="Probability of Stopover",xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=2,labels = TRUE)
+axis(side=1,labels = TRUE)
+text(-2.7,0.95, "Ruficollis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",experience="2",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="ruficollis",experience="3",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+#meridionalis
+plot(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",LD1=XLD,experience="1"),
+        type="response"),type="o",pch=21,bg="white",
+ylab="",xlab="Multivariate Weather",ylim=c(0,1),axes=FALSE)
+axis(side=1,labels=TRUE)
+axis(side=2,labels = FALSE)
+text(-2.2, 0.95, "Meridionalis",cex=1.3)
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",experience="2",LD1=XLD),
+        type="response"),type="o",pch=21,bg="black")
+points(XLD,
+predict(ld.glm,newdata=data.frame(pop="meridionalis",experience="3",LD1=XLD),
+        type="response"),type="o",pch=21,bg="red")
+
+#`r fig.5_cap`
+
+```
+
+
+<br><br>
+
+
+
+
+```{r,echo=FALSE,fig.height=8}
+v.start %>%
+  gather(-diff.start, key = "var", value = "value")%>% 
+  ggplot(aes(y = value, x = diff.start)) +
+    geom_smooth(se=FALSE) +
+    facet_wrap(~var, scales = "free",nrow=7) +
+    geom_vline(aes(xintercept=0),col="red")+
+    theme_bw()+ggtitle("Start of Stopover")+ylab("Mean change in value") +
+                    xlab("Hours from start of stopover")
+```
+`r fig.6_cap`  
+<br><br>
+
+```{r,echo=FALSE,fig.height=8}
+v.end %>%
+  gather(-diff.end, key = "var", value = "value")%>% 
+  ggplot(aes(y = value, x = diff.end)) +
+    geom_smooth(se=FALSE) +
+    facet_wrap(~var, scales = "free",nrow=7) +
+  geom_vline(aes(xintercept=0),col="red")+
+    theme_bw()+ggtitle("End of Stopover")+ylab("Mean change in value") +
+                    xlab("Hours from end of stopover")
+```
+`r fig.7_cap`  
+<br><br>
+
+```{r, echo=FALSE,fig.height=8,eval=FALSE}
+d12 %>%
+  ggplot(aes(y = diff.val, x = diff.hr)) +
+    geom_smooth(se=FALSE) +
+    facet_wrap(~var, scales = "free",nrow=7) +
+  geom_vline(aes(xintercept=0),col="red")+
+    theme_bw()+ggtitle("Difference between start and end of stopovers")+ylab("Difference between values")+ 
+                    xlab("Hours from start or end of stopover")
+
+#`r fig.8_cap`  
+```
+
+
+
