@@ -29,10 +29,10 @@ show  <- 1
 #build <- 1                                                   #use if you are creating the directories for the first time
 
 if(grepl("windows", fdirs$computeros)==F){
-  fdirs$prjdir <- "~/mypath/R-manuscripts/Chapter 1/scripts/"
+  fdirs$prjdir <- "~/mypath/myproject/Chapter 1/scripts/"
   fdirs$prjdta <- "./data/"
 }else{                                                        #using windows machine
-  fdirs$prjdir <- "C:/mypath/R-manuscripts/Chapter 1/scripts/"
+  fdirs$prjdir <- "C:/mypath/myproject/Chapter 1/scripts/"
   fdirs$prjdta <- "./data/" 
 }
 
