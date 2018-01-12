@@ -1,6 +1,5 @@
-theme_Publication <-function (base_size = 12, base_family = "") {
-  theme_grey(base_size = base_size, 
-             base_family = base_family) %+replace% 
+theme_Publication <-
+  theme_grey() %+replace% 
   theme(plot.title = element_text(face = "bold",
                                   size = rel(1.2), hjust = 0.5),
         #text = element_text(),
@@ -25,7 +24,6 @@ theme_Publication <-function (base_size = 12, base_family = "") {
         strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
         strip.text = element_text(face="bold")
         )
-}
 
 
 

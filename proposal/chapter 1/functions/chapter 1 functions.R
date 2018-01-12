@@ -33,7 +33,7 @@ detachAllPackages <- function() {
 
 foobar <- function(foo) {
   print("Hello World!")
-  print(paste("foo is", foo)
+  print(paste("foo is", foo))
 }
 
 foo_sq <-function(foo) {
