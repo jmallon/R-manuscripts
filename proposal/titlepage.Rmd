@@ -8,7 +8,7 @@ output: pdf_document
 
 \LARGE
 
-{\bf Linking weather and evolution to the movement ecology of birds}
+{\bf My Dissertation Title}
 
 \vspace{1.5 cm}
 \normalsize
@@ -17,7 +17,7 @@ By
 \vspace{1.5 cm}
 
 \Large
-Julie Mallon
+Your Name
 
 \vspace{3 cm}
 
@@ -25,22 +25,21 @@ Julie Mallon
 A dissertation proposal for the degree of  
 
 \vspace{0.5 cm}
-Doctor of Philosophy in Biological Sciences
+Doctor of Philosophy in [Department]
 
 \vspace{0.5 cm}
-University of Maryland, College Park
+University Name
 
 \vspace{0.5 cm}
-October 10, 2017
+January 1, 2020
 
 \end{centering}
 
 \vspace{3 cm}
 
-\normalsize
+\normalsize 
 Committee members:  
-Dr. Bill Fagan, Committee Chair  
-Dr. Derek Paley, Dean’s Rep  
-Dr. Jerry Wilkinson   
-Dr. Helen Bailey  
-Dr. Keith Bildstein  
+Dr. Curly  
+Dr. Moe  
+Dr. Larry  
+

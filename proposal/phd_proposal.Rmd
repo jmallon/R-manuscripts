@@ -11,8 +11,10 @@ header-includes:
 - \usepackage{gensymb}
 - \newcommand{\blandscape}{\begin{landscape}}
 - \newcommand{\elandscape}{\end{landscape}}
-bibliography: [../Chapter 1/ch1_references.bib,ch2.bib,ch3.bib] #C:/Users/Julie/Box Sync/R/Chapter 1/ch1_references.bib
-csl: the-auk.csl #C:/Users/Julie/Box Sync/R/Chapter 1/the-auk.csl
+bibliography: C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/manuscript.bib
+#bibliography: [../Chapter 1/ch1_references.bib,ch2.bib]  # on OS, you can use multiple bibliographies like so
+csl: C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/the-auk.csl
+#the-auk.csl 
 ---
 
 ```{r include=FALSE}
@@ -40,33 +42,23 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 \tableofcontents
 
 
-
-```{r child = 'abstract.Rmd',eval=FALSE}
-#move the contents outside the chunk when ready to include
 \newpage
-\fancyhead[CO,CE]{Abstract}
-\addcontentsline{toc}{section}{Abstract}
+\fancyhead[CO,CE]{Dissertation Abstract}
+\addcontentsline{toc}{section}{Dissertation Abstract}
 \section*{Abstract}
+```{r child = 'abstract.Rmd'}
 ```
 
 \newpage
 \pagenumbering{arabic}
 \fancyhead[CO,CE]{Chapter 1}
 
-```{r child = '../Chapter 1/chapter1.Rmd'}
+```{r child = 'C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/chapter 1/chapter1.Rmd'}
 ```
 
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Chapter 2}
-
-```{r child = 'chapter2.Rmd'}
-```
-
-
-\FloatBarrier
-\newpage
-\fancyhead[CO,CE]{Chapter 3}
 
 ```{r child = 'chapter3.md'}
 ```
@@ -77,7 +69,6 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 \section*{Literature Cited}
 
 ```{r child = 'lit_cited.R'}
-#<div id="refs"></div>
 ```
 
 

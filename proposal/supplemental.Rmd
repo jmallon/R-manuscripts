@@ -7,8 +7,10 @@ output: html_document
 
 #Supplemental Figures
 ```{r,echo=FALSE,message=FALSE,warning=FALSE,include=FALSE}
-library(here)
-source(here('Scripts/risk aversion.R'))
+library(ggplot2)
+
+prjdir = "C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/chapter 1/functions"
+source(file.path(prjdir,'theme_Publication.R'))
 ```
 
 
@@ -17,164 +19,18 @@ source(here('Scripts/risk aversion.R'))
 fig_nums <- captioner::captioner(prefix = "Figure")
 
 fig.s1_cap <- fig_nums(name = "fig_1", 
-                        caption = "Effect of position and season on Meridionalis risk tolerance")
-fig.s2_cap <- fig_nums(name = "fig_2", 
-                        caption = "Effect of position and season on Aura risk tolerance")
-fig.s3_cap <- fig_nums(name = "fig_3", 
-                        caption = "Effect of position and season on Ruficollis risk tolerance")
-
-  #inline example  text `r f.ref("fig_1")` more text
-f.ref <- function(x) {
-  stringr::str_extract(fig_nums(x), "[^:]*")
-}
+                        caption = "Here is an example figure with a theme applied. Include it in all of your plots to keep your document cohesive and reduce your code!")
 
 ```
 
-```{r Raw Full Interactions meridionalis, eval=TRUE,echo=FALSE,warning=FALSE,message=FALSE,fig.height=3.5}
-par(mfrow = c(1, 2),     # 2x2 layout
-    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
-    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
-    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
-    xpd = NA)            # allow content to protrude into outer margin (and beyond)
-ld.glm <- glm(stopover ~ LD1*pop*dist*Season, data=global.df2, family=binomial)
-
-#spring
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="summer",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="",ylim=c(0,1),
-        xlab="Multivariate Weather")
-text(-3, 0.99, "Spring",cex=1.2)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="middle",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black")
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="winter",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red")
-legend(y=0.93,x=-4,pch=21,col=c("black","black","black"),pt.bg=c("white","black","red"),
-legend=c("summer","middle","winter"))
-#FALL
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="summer",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="",ylim=c(0,1),axes=FALSE,
-        xlab="Multivariate Weather")
-text(-3, 0.99, "Fall",cex=1.2)
-axis(side=1,labels=TRUE)
-axis(side=2,labels = FALSE)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="middle",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black")
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="meridionalis",dist="winter",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red")
+```{r, eval=TRUE,echo=FALSE,warning=FALSE,message=FALSE,fig.height=3.5}
+p <- ggplot(mtcars, aes(mpg, wt)) +
+  geom_point(aes(colour = factor(cyl)))
+p +theme_Publication
 ```
 
 `r fig.s1_cap`
 
-<br><br>
-<br><br>
-```{r aura,eval=TRUE,echo=FALSE,warning=FALSE,message=FALSE,fig.height=3.5}
-par(mfrow = c(1, 2),     # 2x2 layout
-    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
-    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
-    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
-    xpd = NA)            # allow content to protrude into outer margin (and beyond)
 
-#spring
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="summer",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="",
-        ylim=c(0,1),xlab="Multivariate Weather")
-text(-3, 0.99, "Spring",cex=1.2)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="middle",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black",ylab="",ylim=c(0,1))
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="winter",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red",ylab="",ylim=c(0,1))
-legend(y=0.93,x=-4,pch=21,col=c("black","black","black"),pt.bg=c("white","black","red"),
-legend=c("summer","middle","winter"))
-
-#fall
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="summer",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="",
-        ylim=c(0,1),axes=FALSE,xlab="Multivariate Weather")
-text(-3, 0.99, "Fall",cex=1.2)
-axis(side=1,labels=TRUE)
-axis(side=2,labels = FALSE)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="middle",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black",ylab="",ylim=c(0,1))
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="aura",dist="winter",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red",ylab="",ylim=c(0,1))
-
-```
-
-`r fig.s2_cap`
-
-
-<br><br>
-
-
-
-```{r ruficollis,eval=TRUE,echo=FALSE,warning=FALSE,message=FALSE,fig.height=3.5}
-
-par(mfrow = c(1, 2),     # 2x2 layout
-    oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
-    mar = c(1, 1, 0, 0), # space for one row of text at ticks and to separate plots
-    mgp = c(2, 1, 0),    # axis label at 2 rows distance, tick labels at 1 row
-    xpd = NA)            # allow content to protrude into outer margin (and beyond)
-#spring
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="summer",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="Probability of Stopover",
-        xlab="Multivariate Weather",ylim=c(0,1))
-text(-3, 0.99, "Spring",cex=1.2)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="middle",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black")
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="winter",
-                                  Season="Spring",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red")
-legend(y=0.93,x=-4,pch=21,col=c("black","black","black"),pt.bg=c("white","black","red"),
-legend=c("summer","middle","winter"))
-
-#fall
-plot(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="summer",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="white",ylab="",
-       ylim=c(0,1),axes=FALSE,xlab="Multivariate Weather")
-text(-3, 0.99, "Fall",cex=1.2)
-axis(side=1,labels=TRUE)
-axis(side=2,labels = FALSE)
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="middle",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="black")
-points(XLD,
-predict(ld.glm,newdata=data.frame(pop="ruficollis",dist="winter",
-                                  Season="Fall",LD1=XLD),
-        type="response"),type="o",pch=21,bg="red")
-
-```
-
-`r fig.s3_cap`
 
 
