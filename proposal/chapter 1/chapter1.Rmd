@@ -1,5 +1,5 @@
 ---
-title: "Chapter 1: What should the title of my first chapter be?"
+title: "Chapter 1: This is the title that appears on your table of contents"
 output: pdf_document
 bibliography: ../Chapter 1/ch1_references.bib     #relative path on OS
 #bibliography: C:/mypath/myproject/the-auk.csl    #files here can't depend on file_dir_params and windows needs full filepath :(
@@ -70,13 +70,13 @@ f.ref <- function(x) {
 
   #inline example  text `r f.ref("fig_1")` more text
 ```
-#My genius Chapter 1 title here 
+# Example Chapter Including In-line R Code  
 
-##Abstract
+## Abstract
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.  
 
 
-##Introduction
+## Introduction
 
 Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.  
 
@@ -97,19 +97,31 @@ Here is how to refer to a table inline (`r t.ref("tab_1")`). Lorem ipsum dolor s
 
 
 ### Analyses
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+Entering 
+once 
+does 
+not 
+break 
+a 
+paragraph.
 
 
 
-##Results   
-Using `r print("inline code")`, we can include just about anything! I can include a number (n=`r n`), or compute a range from a subset ('r n-1 - n^2'). These are really useful when you go back and make changes to your original Rscripts! No need to update numbers or references by hand. Mathematical equations are easy too! (insert equation here). We can again reference our table (`r t.ref("tab_2")`) and figure (`r f.ref("fig_2")`). 
+
+
+Entering twice does. 
+
+
+
+Entering more than twice doesn't increase line spaceing. But '<br>' can be used to add more than one line break!
+
+## Results   
+Using `r print("inline code")`, we can include just about anything! I can include a number (n=`r n`), or compute a range from a subset (`r n-1 - n^2`). These are really useful when you go back and make changes to your original Rscripts! No need to update numbers or references by hand. Mathematical equations are easy too! (insert equation here). We can again reference our table (`r t.ref("tab_2")`) and figure (`r f.ref("fig_2")`). 
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
 
 
 ## Discussion
-
-
 Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles.
 
 Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles.
@@ -117,22 +129,18 @@ Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e 
 
 <br><br>
 
-##Conclusion
+## Conclusion
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
 
-##Tables
+## Tables
 `r tab.1_cap`
 
-|Weather variable   | Source |    Definintion|
-|------------------ | -------|    ----------------------------------|
-|Daily Total Precipitation   |  ECMWF   |  Total accumulated convective and stratiform precipitation.  |
-|Thermal          |  MoveBank  |  Velocity of thermal uplift (air that rises as it is heated by the sun near the earth's surface)   |
-|Tailwind         | ECMWF |  Tailwind magnitude calculated from ECMWF Wind U and V components, relative to bird heading  |
-|Total Atmospheric Water    |  ECMWF   | Total water in the entire atmospheric column (water vapor + cloud water + cloud ice)   |
-|Air Temperature |  ECMWF   | Air temperature 2 m above the ground   |
-|Orographic       | MoveBank  | The velocity of upward air movement caused when rising terrain forces air to higher elevations   |
-|Downward Longwave Thermal Radiation    | ECMWF |  Amount of downward thermal (longwave) radiation (heat emitted by the earth's surface and atmosphere) at the earth's surface  |
-|Downward Shortwave Thermal Radiation      |   ECMWF  |   Amount of downward incident solar (shortwave) radiation at the earth's surface  |
+|Column 1   |Column 2|    Column 3|                                   #spacing of words and '|' controls alignment for the whole column
+|------------------ | -------|    ----------------------------|       #controls column widths
+|Var 1  |  45   |  56  |                                                    
+|Var 2          |  41  |  62  |                                       #spacing down here does not change width or alignment
+|Var 3        | 32 |  41  |
+|Var 4    |  35   | 77  |
 
 
 
@@ -145,11 +153,8 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
 ```{r,results='asis',echo=FALSE}
 
 library(stargazer)
-  stargazer(m1,m2,m3,m4,m5,m6,single.row = TRUE, column.labels  =c("Sedentary", "Overnight","Single Linear", "Mulitple Linear", "Small Tortuous", "Large Tortuous"),header=FALSE,         
-            covariate.labels = c("Surface Roughness", "Total Atm. Water", "Thermal",
-                               "Tailwind", "Precipitation (m)", "Orographic", "Surface Pressure",
-                               "Downward Long. Rad.", "Temperature", "Downward Short. Rad.", 
-                               "Boundary Height", "Intercept"))
+  stargazer(m1,m2,m3,m4,single.row = TRUE, column.labels  =c("All Cuts", "Ideal","Very Good", "Fair"),header=FALSE,         
+            covariate.labels = c("Carat", "Cut","Depth","Clarity", "Intercept"))
 
 ```
 \elandscape
@@ -157,11 +162,11 @@ library(stargazer)
 
 \newpage
 
-##Figures
+## Figures
 
 
 ```{r,fig.height=6,fig.width=5,echo=FALSE}
-colrs <- c("aura"="white", "meridionalis"="black", "ruficollis"="red")
+colrs <- c("group 1"="black", "group 2"="red")
 
 ggplot() + 
   geom_polygon(data = americas.df, aes(x = long, y = lat,group=group),fill="grey90") +
@@ -174,8 +179,8 @@ ggplot() +
                                 "80ºW", "70ºW", "60ºW","50ºW", "40ºW"))+ 
   labs(y="",x="")+
   coord_map("azequalarea", orientation = c(0, -90, 0))+
-geom_point(data=stops_full_weather2, aes(x=location.long, y=location.lat,color=pop), alpha = .5,size=1.4,pch=16)+  
-  scale_fill_manual(values = colrs, name="Race")+
+geom_point(data=points.df, aes(x=lon, y=lat,color=group), alpha = .5,size=1.4,pch=16)+  
+  scale_fill_manual(values = colrs, name="GROUP")+
   theme(panel.background = element_rect(fill = "white", colour = "grey"), 
         panel.grid.major = element_line(colour = "grey90"),
         panel.grid.minor = element_blank(),
@@ -188,7 +193,7 @@ geom_point(data=stops_full_weather2, aes(x=location.long, y=location.lat,color=p
 `r fig.1_cap` 
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.height=4,fig.width=4.5}
-p.speed
+p.mpg
 ```
 
 `r fig.2_cap` 
@@ -196,3 +201,4 @@ p.speed
 
 
 
+{end of document}
