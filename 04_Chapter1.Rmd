@@ -23,16 +23,11 @@ rm(winos)
 prjdir = "C:/Users/Work/Documents/GitHub/R-manuscripts/"
 source(paste0(prjdir,'Coding Examples/example source script.R'))
 source(file.path(prjdir,'proposal/chapter 1/functions/theme_Publication.R'))
-#source(paste0(prjdir,'risk aversion.R'))
-#source(paste0(prjdir,'start_end_stopovers.R'))
-#source(paste0(prjdir,'acopian telem map.R'))
 
-pacman::p_load(knitr, captioner, bundesligR, stringr)
-library(broman)
-library(bibtex)
+pacman::p_load(knitr, captioner, bundesligR, stringr, broman, bibtex, ggplot2, stargazer)
 
-## useful to add R package citations
-  #write.bib(c('bibtex','lme4','adehabitatLT','ResourceSelection','marcher'), 
+## useful way to append R package citations to a .bib file
+  #write.bib(c('bibtex','ggplot2'), 
   #          file = "references.bib", append = TRUE, verbose = TRUE)
   #bib<-read.bib('references.bib')
   #bib$key
@@ -44,11 +39,10 @@ table_nums <- captioner::captioner(prefix = "Table")
 
 tab.1_cap <- table_nums(name = "tab_1", 
                         caption = "Here is a regular old table. 
-This one I created manually using markdown. 
-                        Note that the spacing of words
-and '|' controls alignment for the whole column.
-Specifically, line 1 = headers, line 2 = relative column widths,
-lines 3-6 = table content (note that the spacing here does not change width or alignment)].")
+                                  This one I created manually using markdown. 
+                                  This is a 'pipe' table - note that ':' controls alignment for the whole column.
+                                  Lines 3-6 (table content) - note that the spacing here does not change width or 
+                                  alignment - but not aligning your text is not advised :).")
 
 tab.2_cap <- table_nums(name = "tab_2", 
                         caption = "Sometimes tables are too large and need to be oriented as landscape. Here is an example of a complex table from an R chunk.")
@@ -83,25 +77,23 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
 
 ## Introduction
 
-Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.  
-
 Here is how to do a citation at the end of a sentence [@Mallonetal2016, @Mallon_Thesis]. Here is how to include an inline citation, referencing the @vegan package. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. 
 
-Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. 
+Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.  
+
 
 
 
 ## Methods
 
 ### Sub-header 1
-Sentence refering to figure, inline (`r f.ref("fig_1")`). Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate
+Sentence refering to figure, inline (`r f.ref("fig_1")`). 
+
+#### Sub-sub-header
+Here is how to refer to a table inline (`r t.ref("tab_1")`).
 
 
 ### Sub-header 2
-Here is how to refer to a table inline (`r t.ref("tab_1")`). Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-
-
-### Analyses
 Entering 
 once 
 does 
@@ -112,19 +104,17 @@ paragraph.
 
 
 
-
-
 Entering twice does.  
 Or using 2 spaces after a word.
-
 
 
 Entering more than twice doesn't increase line spaceing. But `<br>` can be used to add more than one line break!
 
 ## Results   
-Using `r print("inline code")`, we can include just about anything! I can include a number (n=`r n`), or compute a range from a subset (`r n-1` - `r n^2`). These are really useful when you go back and make changes to your original Rscripts! No need to update numbers or references by hand. Mathematical equations are easy too! $\sum_{i=1}^n X_i$. *See how easy that was?* We can again reference our table (`r t.ref("tab_2")`) and figure (`r f.ref("fig_2")`). Or make a **strong** statement.
+Using `r print("inline code")`, we can include just about anything! I can include a number (n=`r n`), or compute a range from a subset (`r n-1` - `r n^2`). These are really useful when you go back and make changes to your original Rscripts! No need to update numbers or references by hand. Mathematical equations are easy too! $\sum_{i=1}^n X_i$. 
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+*See how easy that was?* We can again reference our table (`r t.ref("tab_2")`) and figure (`r f.ref("fig_2")`). Or make a **strong** statement.
+
 
 
 ## Discussion
@@ -141,14 +131,16 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
 ## Tables
 `r tab.1_cap`
 
-|Column 1    | Column 2 |     Column 3|                                   
-|--------- | ----|    ----------------------------|       
-|Var 1  |  45   |  56  |                                
+|Left-aligned Column |Centered Column |Right-aligned Column|                                   
+|:-------------------|:--------------:|-------------------:|       
+|Var 1               |  45            |  56                |                                
 |Var 2          |  41  |  62  |                         
-|Var 3        | 32 |  41  |
-|Var 4    |  35   | 77  |
+|Var 3               | 32             |     41             |
+|Var 4               |  35            | 77                 |
 
-
+```{r, eval=FALSE, echo=FALSE}
+Instructions on how to do tables in Markdown here: http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#tables
+```
 
 <br><br>
 
