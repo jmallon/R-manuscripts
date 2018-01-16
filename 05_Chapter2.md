@@ -5,8 +5,8 @@ fontsize: 11pt
 
 [This is an example of how to write *without* R code, using **only markdown**]
 
-#A Tale of Two Cities 
-##I. The Period
+# A Tale of Two Cities  
+## I. The Period  
 *It was the best of times,*  
 *it was the worst of times,*  
 *it was the age of wisdom,*  
@@ -30,12 +30,10 @@ In England, there was scarcely an amount of order and protection to justify much
 
 All these things, and a thousand like them, came to pass in and close upon the dear old year one thousand seven hundred and seventy-five. Environed by them, while the Woodman and the Farmer worked unheeded, those two of the large jaws, and those other two of the plain and the fair faces, trod with stir enough, and carried their divine rights with a high hand. Thus did the year one thousand seven hundred and seventy-five conduct their Greatnesses, and myriads of small creatures—the creatures of this chronicle among the rest—along the roads that lay before them.
 
+---
 
 
-
-
-
-##II. The Mail
+## II. The Mail
 It was the Dover road that lay, on a Friday night late in November, before the first of the persons with whom this history has business. The Dover road lay, as to him, beyond the Dover mail, as it lumbered up Shooter’s Hill. He walked up hill in the mire by the side of the mail, as the rest of the passengers did; not because they had the least relish for walking exercise, under the circumstances, but because the hill, and the harness, and the mud, and the mail, were all so heavy, that the horses had three times already come to a stop, besides once drawing the coach across the road, with the mutinous intent of taking it back to Blackheath. Reins and whip and coachman and guard, however, in combination, had read that article of war which forbade a purpose otherwise strongly in favour of the argument, that some brute animals are endued with Reason; and the team had capitulated and returned to their duty.
 
 With drooping heads and tremulous tails, they mashed their way through the thick mud, floundering and stumbling between whiles, as if they were falling to pieces at the larger joints. As often as the driver rested them and brought them to a stand, with a wary “Wo-ho! so-ho-then!” the near leader violently shook his head and everything upon it—like an unusually emphatic horse, denying that the coach could be got up the hill. Whenever the leader made this rattle, the passenger started, as a nervous passenger might, and was disturbed in mind.
@@ -48,7 +46,7 @@ Two other passengers, besides the one, were plodding up the hill by the side of 
 
 \newpage
 
-##Figures
+## Figures
 
 ![](TOTCcover.jpg)
 
