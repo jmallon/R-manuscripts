@@ -5,11 +5,10 @@ date: "September 12, 2017"
 output: html_document
 ---
 
-#Supplemental Figures
+# Supplemental Figures
 ```{r,echo=FALSE,message=FALSE,warning=FALSE,include=FALSE}
 library(ggplot2)
 
-prjdir = "C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/chapter 1/functions"
 source(file.path(prjdir,'theme_Publication.R'))
 ```
 
@@ -19,8 +18,9 @@ source(file.path(prjdir,'theme_Publication.R'))
 fig_nums <- captioner::captioner(prefix = "Figure")
 
 fig.s1_cap <- fig_nums(name = "fig_1", 
-                        caption = "Here is an example figure with a theme applied. Include it in all of your plots to keep your document cohesive and reduce your code!")
-
+                        caption = "Here is an example figure with a theme applied. 
+                        Include it in all of your plots to keep your document 
+                        cohesive and reduce your code!")
 ```
 
 ```{r, eval=TRUE,echo=FALSE,warning=FALSE,message=FALSE,fig.height=3.5}
@@ -30,7 +30,5 @@ p +theme_Publication
 ```
 
 `r fig.s1_cap`
-
-
 
 
