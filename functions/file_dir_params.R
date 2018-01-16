@@ -29,26 +29,24 @@ show  <- 1
 #build <- 1                                                   #use if you are creating the directories for the first time
 
 if(grepl("windows", fdirs$computeros)==F){
-  fdirs$prjdir <- "~/mypath/myproject/Chapter 1/scripts/"
+  fdirs$prjdir <- "~/mypath/myproject/"
   fdirs$prjdta <- "./data/"
 }else{                                                        #using windows machine
-  fdirs$prjdir <- "C:/mypath/myproject/Chapter 1/scripts/"
-  fdirs$prjdta <- "./data/" 
+  fdirs$prjdir <- "C:/mypath/myproject/"
+  fdirs$prjdta <- "./data/"
 }
 
-# Add some child objects to the fdirs environment:
+# Add some child objects to the fdirs environment: (Example, a results and a functions subfolder
 fdirs$prjrslts   <- paste0(fdirs$prjdta, "results/")
-if(show==1 & interactive()) cat("\nprjrslts =", fdirs$prjrslts) #?
-#if(build==1) system(paste0("mkdir -p ", fdirs$prjrslts)) #?
+if(show==1 & interactive()) cat("\nprjrslts =", fdirs$prjrslts) 
+#if(build==1) system(paste0("mkdir -p ", fdirs$prjrslts)) 
 
 fdirs$prjfuns   <- paste0(fdirs$prjdir, "functions/")
-if(show==1 & interactive()) cat("\nprjfuns =", fdirs$prjfuns) #?
-#if(build==1) system(paste0("mkdir -p ", fdirs$prjfuns)) #?
+if(show==1 & interactive()) cat("\nprjfuns =", fdirs$prjfuns)
+#if(build==1) system(paste0("mkdir -p ", fdirs$prjfuns)) 
 
 
 # Attach the new environment (and safely reload if already attached):
 while("fdirs" %in% search())
   detach("fdirs")
 attach(fdirs)
-
-#x <- readRDS(paste0(src, "somefile.Rds"))
