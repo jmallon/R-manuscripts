@@ -1,6 +1,6 @@
 ---
 title: "Supplemental"
-author: "Julie Mallon"
+author: "Your Name"
 date: "September 12, 2017"
 output: html_document
 ---
@@ -9,7 +9,7 @@ output: html_document
 ```{r,echo=FALSE,message=FALSE,warning=FALSE,include=FALSE}
 library(ggplot2)
 
-source(file.path(prjdir,'theme_Publication.R'))
+source(file.path(prjfuns,'theme_Publication.R'))
 ```
 
 

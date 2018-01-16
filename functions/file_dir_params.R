@@ -29,21 +29,23 @@ show  <- 1
 #build <- 1                                                   #use if you are creating the directories for the first time
 
 if(grepl("windows", fdirs$computeros)==F){
-  fdirs$prjdir <- "~/mypath/myproject/"
-  fdirs$prjdta <- "./data/"
+  fdirs$prjdir <- "~/Documents/GitHub/R-manuscripts/"
 }else{                                                        #using windows machine
-  fdirs$prjdir <- "C:/mypath/myproject/"
-  fdirs$prjdta <- "./data/"
+  fdirs$prjdir <- "C:/USERNAME/Documents/GitHub/R-manuscripts/"
 }
 
 # Add some child objects to the fdirs environment: (Example, a results and a functions subfolder
-fdirs$prjrslts   <- paste0(fdirs$prjdta, "results/")
-if(show==1 & interactive()) cat("\nprjrslts =", fdirs$prjrslts) 
+fdirs$prjdta   <- paste0(fdirs$prjdir, "data/")
+if(show==1 & interactive()) cat("\nprjdta =", fdirs$prjdta) 
 #if(build==1) system(paste0("mkdir -p ", fdirs$prjrslts)) 
 
 fdirs$prjfuns   <- paste0(fdirs$prjdir, "functions/")
 if(show==1 & interactive()) cat("\nprjfuns =", fdirs$prjfuns)
 #if(build==1) system(paste0("mkdir -p ", fdirs$prjfuns)) 
+
+fdirs$prjrslts   <- paste0(fdirs$prjdta, "results/")        #not used here but could be used to save output
+if(show==1 & interactive()) cat("\nprjrslts =", fdirs$prjrslts) 
+#if(build==1) system(paste0("mkdir -p ", fdirs$prjrslts)) 
 
 
 # Attach the new environment (and safely reload if already attached):

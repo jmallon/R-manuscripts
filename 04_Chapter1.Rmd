@@ -8,21 +8,22 @@ header-includes:
 #author and date are excluded because those are on the titlepage
 ---
 
-```{r setup, include=FALSE, eval=FALSE}
+```{r setup, include=FALSE, eval=TRUE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 rm(list=ls())
 
 ## Load host-dependent directory environment
 winos <- ifelse(grepl("windows", Sys.info()['sysname'], ignore.case=T), 1, 0)
-if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")
-if(winos==0) source("~/mypath/myproject/Chapter 1/functions/file_dir_params.R")
+#if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")
+#if(winos==0) source("~/mypath/myproject/Chapter 1/functions/file_dir_params.R")
+if(winos==1) source("C:/USERNAME/Documents/GitHub/R-manuscripts/functions/file_dir_params.R")
+if(winos==0) source("~/Documents/GitHub/R-manuscripts/functions/file_dir_params.R")
 rm(winos)
 ```
 
 ```{r source data and analyses, include=FALSE}
-prjdir = "C:/Users/Work/Documents/GitHub/R-manuscripts/"
-source(paste0(prjdir,'Coding Examples/example source script.R'))
-source(file.path(prjdir,'proposal/chapter 1/functions/theme_Publication.R'))
+source(file.path(prjdta,'example source script.R'))
+source(file.path(prjfuns,'theme_Publication.R'))
 
 pacman::p_load(knitr, captioner, bundesligR, stringr, broman, bibtex, ggplot2, stargazer)
 
@@ -40,12 +41,16 @@ table_nums <- captioner::captioner(prefix = "Table")
 tab.1_cap <- table_nums(name = "tab_1", 
                         caption = "Here is a regular old table. 
                                   This one I created manually using markdown. 
-                                  This is a 'pipe' table - note that ':' controls alignment for the whole column.
-                                  Lines 3-6 (table content) - note that the spacing here does not change width or 
-                                  alignment - but not aligning your text is not advised :).")
+                                  This is a 'pipe' table - note that ':' controls 
+                                  alignment for the whole column. Lines 3-6 (table 
+                                  content) - note that the spacing here does not 
+                                  change width or alignment - but not aligning 
+                                  your text is not advised :).")
 
 tab.2_cap <- table_nums(name = "tab_2", 
-                        caption = "Sometimes tables are too large and need to be oriented as landscape. Here is an example of a complex table from an R chunk.")
+                        caption = "Sometimes tables are too large and need to be 
+                                  oriented as landscape. Here is an example of a 
+                                  complex table from an R chunk.")
 
 t.ref <- function(x) {
   stringr::str_extract(table_nums(x), "[^:]*")
@@ -77,7 +82,9 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
 
 ## Introduction
 
-Here is how to do a citation at the end of a sentence [@Mallonetal2016, @Mallon_Thesis]. Here is how to include an inline citation, referencing the @vegan package. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. 
+Here is how to do a citation at the end of a sentence [@Mallonetal2016, @Mallon_Thesis]. Here is how to include an inline citation, referencing the @vegan package. 
+
+Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. 
 
 Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.  
 
@@ -150,9 +157,9 @@ Instructions on how to do tables in Markdown here: http://rmarkdown.rstudio.com/
 `r tab.2_cap`
 ```{r,results='asis',echo=FALSE}
 
-library(stargazer)
-  stargazer(m1,m2,m3,m4,single.row = TRUE, column.labels  =c("All Cuts", "Ideal","Very Good", "Fair"),header=FALSE,         
-            covariate.labels = c("Carat", "Cut","Depth","Clarity", "Intercept"))
+stargazer(m1,m2,m3,m4, single.row = TRUE, header=FALSE, 
+          column.labels  =c("All Cuts", "Ideal","Very Good", "Fair"),        
+          covariate.labels = c("Carat", "Cut","Depth","Clarity", "Intercept"))
 
 ```
 \elandscape

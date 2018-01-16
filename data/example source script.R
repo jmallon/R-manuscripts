@@ -1,5 +1,8 @@
 #sourced example
 
+pacman::p_load(ggplot2, ggmap, rworldmap, rworldxtra, scales)
+
+
 #in-line references
 n=rnorm(1)
 
@@ -16,10 +19,6 @@ m4<- glm(price ~ carat + depth + clarity,
 
 
 #Figure 1 
-library(ggmap)
-library(rworldmap)
-library(rworldxtra)
-library(scales)
 
 latlimits <- c(-50, 10) 
 longlimits <- c(-80, -40) 

@@ -48,7 +48,7 @@ Two other passengers, besides the one, were plodding up the hill by the side of 
 
 ## Figures
 
-![](TOTCcover.jpg)
+![](./data/TOTCcover.jpg)
 
 
 Figure 1. You could also include a caption directly below your figure like this. You also don't have to recreate your figure each time if it is difficult to do so, or could include an image like so.
