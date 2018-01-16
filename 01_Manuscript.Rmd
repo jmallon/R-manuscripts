@@ -11,20 +11,23 @@ header-includes:
 - \usepackage{gensymb}
 - \newcommand{\blandscape}{\begin{landscape}}
 - \newcommand{\elandscape}{\end{landscape}}
-bibliography: C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/manuscript.bib
-#bibliography: [../Chapter 1/ch1_references.bib,ch2.bib]  # on OS, you can use multiple bibliographies like so
-csl: C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/the-auk.csl
-#the-auk.csl 
+
+bibliography: C:/Users/mypath/myproject/data/references.bib
+#bibliography: .data/references.bib                   # Use relative filepaths whenever possible! OS is friendlier than PC
+#bibliography: [./data/ch1.bib,./data/ch2.bib]        # on OS, you can use multiple bibliographies like so
+
+csl: C:/Users/mypath/myproject/data/the-auk.csl
+#csl stylizes your .bib file to match a journal of your choice
 ---
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
- options(scipen=1, digits=2)
+ options(scipen=1, digits=2)                                      #this controls digits when rounding
 ```
 
 \pagenumbering{gobble}
 
-```{r child = 'titlepage.Rmd'}
+```{r child = '02_Titlepage.Rmd'}
 ```
 
 \newpage
@@ -46,21 +49,21 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 \fancyhead[CO,CE]{Dissertation Abstract}
 \addcontentsline{toc}{section}{Dissertation Abstract}
 \section*{Abstract}
-```{r child = 'abstract.Rmd'}
+```{r child = '03_Abstract.Rmd'}
 ```
 
 \newpage
 \pagenumbering{arabic}
 \fancyhead[CO,CE]{Chapter 1}
 
-```{r child = 'C:/Users/Work/Documents/GitHub/R-manuscripts/proposal/chapter 1/chapter1.Rmd'}
+```{r child = '04_Chapter1.Rmd'}
 ```
 
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Chapter 2}
 
-```{r child = 'chapter3.md'}
+```{r child = '05_Chapter2.md'}
 ```
 
 \FloatBarrier
@@ -68,13 +71,14 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 \fancyhead[CO,CE]{Literature Cited}
 \section*{Literature Cited}
 
-```{r child = 'lit_cited.R'}
+```{r child = '06_LitCited.R'}
 ```
-
 
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Supplemental Information}
 
-```{r child = 'supplemental.Rmd'}
+```{r child = '07_Supplemental.Rmd'}
 ```
+
+
