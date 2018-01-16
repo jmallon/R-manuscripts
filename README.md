@@ -2,7 +2,7 @@
 Templates and functions useful for writing documents completely within R such as a manuscript or a thesis or dissertation.
 
 Instructions:
-1) Install RStudio and LaTex, if necessary
+1) Install [RStudio](https://www.rstudio.com/) and [LaTeX](https://www.latex-project.org/get/), if necessary
 2) Clone project to your desktop
 3) Open in RStudio
 4) Change all filepaths to point to your project directory
@@ -28,3 +28,4 @@ Other useful links:
 [Using GitHub Quickstart guide](https://guides.github.com/activities/hello-world/)  
 [Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)  
 [ggplot2](docs.ggplot2.org/current/)
+[Learn LaTeX](https://www.sharelatex.com/learn/Learn_LaTeX_in_30_minutes)
