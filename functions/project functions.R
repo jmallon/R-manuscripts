@@ -3,19 +3,19 @@
 ## Load host-dependent directory environment
     winos <- ifelse(grepl("windows", Sys.info()['sysname'], ignore.case=T), 1, 0)
     # specify absolute file path to file_dir_params.R
-    if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")      #Change to your path
-    if(winos==0) source("~/mypath/myproject/Chapter 1/functions/file_dir_params.R")       #Change to your path 
+    if(winos==1) source("C:/mypath/myproject/functions/file_dir_params.R")      #Change to your path
+    if(winos==0) source("~/mypath/myproject/functions/file_dir_params.R")       #Change to your path 
     rm(winos)
 
 ####################
 
 ## Call any functions outside of this script
   source(paste0(prjfuns, "theme_Publication.R"))
-  source(paste0(prjfuns, "plot.fpt.r"))
-  source(paste0(prjfuns, "multiplot.r"))
-  #x <- readRDS(paste0(src, "somefile.Rds"))                                      #example code for reference with .rds files
-  #source(chartr("/","\\", "/mypath/myproject/functions/multiplot.r"))            #example code if windows is causing issues with 
-                                                                                  #  file paths, not solved by file_dir_params 
+
+  #x <- readRDS(paste0(src, "somefile.Rds"))                                      # example code for reference with .rds files
+  #source(chartr("/","\\", "/mypath/myproject/functions/multiplot.r"))            # example code if windows is causing issues with 
+                                                                                  #  file paths, not solved by file_dir_params
+  #file.path("C:","mypath","myproject","functions","theme_Publication.R")         # Another PC workaround!
 
 ## When compiling multiple .R or .Rmd files, it is best to clear your workspace after each compilation
 ## Call at the beginning of each file
