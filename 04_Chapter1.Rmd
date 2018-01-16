@@ -14,8 +14,6 @@ rm(list=ls())
 
 ## Load host-dependent directory environment
 winos <- ifelse(grepl("windows", Sys.info()['sysname'], ignore.case=T), 1, 0)
-#if(winos==1) source("C:/mypath/myproject/Chapter 1/functions/file_dir_params.R")
-#if(winos==0) source("~/mypath/myproject/Chapter 1/functions/file_dir_params.R")
 if(winos==1) source("C:/USERNAME/Documents/GitHub/R-manuscripts/functions/file_dir_params.R")
 if(winos==0) source("~/Documents/GitHub/R-manuscripts/functions/file_dir_params.R")
 rm(winos)

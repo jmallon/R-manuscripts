@@ -12,11 +12,11 @@ header-includes:
 - \newcommand{\blandscape}{\begin{landscape}}
 - \newcommand{\elandscape}{\end{landscape}}
 
-#bibliography: C:/Users/mypath/myproject/data/references.bib
+#bibliography: C:/USERNAME/Documents/GitHub/R-manuscripts/data/references.bib
 bibliography: ./data/references.bib                   # Use relative filepaths whenever possible! OS is friendlier than PC
 #bibliography: [./data/ch1.bib,./data/ch2.bib]        # on OS, you can use multiple bibliographies like so
 
-#csl: C:/Users/mypath/myproject/data/the-auk.csl
+#csl: C:/USERNAME/Documents/GitHub/R-manuscripts/data/the-auk.csl
 csl: ./data/the-auk.csl
 #csl stylizes your .bib file to match a journal of your choice
 ---
